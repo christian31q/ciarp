@@ -1,0 +1,11 @@
+{
+  "title": "Prototipo CIARP",
+  "description": "This web application streamlines task management for teams, enhancing collaboration and productivity by providing intuitive tools for tracking progress and deadlines.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

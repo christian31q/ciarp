@@ -1,0 +1,2478 @@
+PROMPT MAESTRO — FIGMA MAKE
+UNIVERSIDAD MILITAR NUEVA GRANADA
+Sistema: “Registro, validación y valoración”
+
+Actúa simultáneamente como Lead Product Designer, UX Architect, Design Systems Designer y Prototyper senior especializado en aplicaciones web institucionales, académicas y administrativas.
+
+Tu tarea es CONSTRUIR, no explicar. Genera directamente un prototipo web institucional de alta fidelidad, completamente navegable e interactivo, para la Universidad Militar Nueva Granada, destinado al registro, validación documental y valoración de hoja de vida docente conforme al Decreto 1279 de 2002.
+
+El resultado no debe sentirse como una plantilla genérica de dashboard. Debe parecer un producto institucional real, sobrio, moderno, claro, profesional y listo para presentar ante una universidad.
+
+No hagas preguntas antes de comenzar. Las decisiones no especificadas que sean únicamente de presentación, espaciado, composición o microinteracción puedes resolverlas con criterio profesional siguiendo estas instrucciones. Las reglas de negocio, campos, puntajes, fórmulas, criterios y estructura normativa NO se pueden improvisar.
+
+────────────────────────────────────────
+1. PRIORIDAD DE REQUISITOS
+────────────────────────────────────────
+
+Cuando exista cualquier duda o posible conflicto, utiliza este orden de prioridad:
+
+1. Las restricciones explícitas e inmutables indicadas en este prompt.
+2. El SRS suministrado para este proyecto.
+3. El Decreto 1279 de 2002 suministrado.
+4. Las imágenes de referencia, moodboard y logotipos suministrados.
+5. Buenas prácticas de UX/UI y accesibilidad.
+
+Son INMUTABLES y no deben ser reinterpretados, renombrados, resumidos, reordenados ni “mejorados” cuando estén definidos por la documentación:
+
+- nombres de los apartados de evaluación;
+- orden de los apartados;
+- criterios y preguntas de cada apartado;
+- cantidad de puntos;
+- fórmulas de cálculo;
+- escalas de valoración;
+- campos solicitados al evaluador;
+- campos asociados al docente o persona evaluada;
+- textos legales o relacionados con la resolución/norma;
+- nombres de botones o acciones cuando estén definidos;
+- cantidad y orden de pasos cuando estén explícitamente definidos.
+
+Si existe un dato normativo que no está especificado en el material suministrado, NO inventes una regla legal ni un valor numérico. Mantén el concepto como parámetro institucional configurable.
+
+────────────────────────────────────────
+2. OBJETIVO DEL PRODUCTO
+────────────────────────────────────────
+
+Diseña una aplicación web denominada:
+
+“Registro, validación y valoración”
+
+Su objetivo es permitir que un funcionario/evaluador autorizado pueda:
+
+- iniciar sesión;
+- crear expedientes de valoración docente;
+- registrar los datos básicos del docente;
+- registrar formación académica;
+- registrar categoría docente;
+- registrar experiencia calificada;
+- registrar productividad académica;
+- adjuntar soportes documentales;
+- registrar revisión documental básica, observaciones e inconsistencias;
+- calcular puntajes preliminares conforme a reglas parametrizadas;
+- consultar resumen de puntajes;
+- obtener un estimativo salarial cuando existan los parámetros necesarios;
+- revisar el expediente;
+- finalizarlo;
+- consultar valoraciones anteriores;
+- exportar información;
+- administrar su perfil y seguridad;
+- consultar los parámetros de valoración vigentes en modo lectura;
+- consultar manual de uso y contacto con soporte.
+
+IMPORTANTE:
+El sistema es una herramienta de apoyo al proceso institucional. NO sustituye la decisión formal del Comité Interno ni el acto administrativo de reconocimiento de puntos.
+
+La aplicación NO determina la autenticidad legal de los documentos. Solo permite registrar revisión, observaciones e inconsistencias documentales o superficiales.
+
+No automatices decisiones que correspondan a pares externos, Comité Interno u otra autoridad institucional.
+
+────────────────────────────────────────
+3. USUARIO Y ROLES
+────────────────────────────────────────
+
+El prototipo debe centrarse EXCLUSIVAMENTE en el rol principal:
+
+EVALUADOR / FUNCIONARIO AUTORIZADO.
+
+No construyas una experiencia paralela para administrador.
+No construyas un dashboard de administrador.
+No incluyas selector de rol.
+
+Existe conceptualmente un segundo rol administrador, pero NO debe representarse como flujo del prototipo.
+
+Regla administrativa que debe quedar preparada a nivel de lógica del producto:
+
+- el administrador únicamente puede modificar el valor numérico de los puntos permitidos en los apartados de valoración;
+- no puede crear criterios;
+- no puede eliminar criterios;
+- no puede cambiar nombres;
+- no puede cambiar el orden;
+- no puede cambiar fórmulas;
+- no puede cambiar escalas;
+- no puede cambiar campos;
+- no puede modificar textos normativos;
+- no puede crear/eliminar apartados;
+- una modificación de puntaje aplica únicamente a VALORACIONES NUEVAS;
+- jamás recalcula automáticamente una valoración “En proceso”;
+- jamás modifica una valoración “Completada”;
+- debe conservarse la versión de parámetros utilizada por cada expediente.
+
+En la experiencia del evaluador, “Parámetros de valoración” será exclusivamente de CONSULTA y no tendrá controles de edición.
+
+────────────────────────────────────────
+4. ARQUITECTURA DEL ARCHIVO DE FIGMA
+────────────────────────────────────────
+
+No superar 5 páginas.
+
+Crear exactamente esta estructura:
+
+01 — Foundations
+02 — Components
+03 — Desktop
+04 — User Flow
+05 — Prototype
+
+No crear páginas adicionales.
+
+01 — Foundations:
+colores, tipografía, espaciado, grids, radios, sombras, bordes, accesibilidad y tokens.
+
+02 — Components:
+componentes maestros con Auto Layout, variantes y estados.
+
+03 — Desktop:
+todos los frames de interfaz de la aplicación.
+
+04 — User Flow:
+solo el flujo principal resumido visualmente. No convertir esta página en un documento académico extenso.
+
+05 — Prototype:
+organizar los puntos de entrada y conectar la demostración completamente navegable.
+
+Si Figma Make no puede materializar literalmente páginas independientes, replica esta organización mediante secciones claramente nombradas respetando exactamente los cinco grupos anteriores.
+
+────────────────────────────────────────
+5. DIRECCIÓN VISUAL
+────────────────────────────────────────
+
+La estética debe tomar como principal referencia el moodboard institucional suministrado:
+
+- Universidad Militar Nueva Granada;
+- interfaz académica-administrativa;
+- navegación lateral oscura;
+- superficies blancas;
+- fondo gris muy claro;
+- amarillo institucional utilizado como acento;
+- formularios limpios;
+- cards discretas;
+- jerarquía visual clara;
+- sensación institucional antes que “startup”;
+- nivel de modernidad aproximado 6/10;
+- lenguaje visual contemporáneo pero sobrio;
+- densidad intermedia;
+- mucho orden;
+- nada ornamental sin función.
+
+La interfaz debe sentirse:
+
+limpia + institucional + académica + administrativa + confiable + fácil de usar.
+
+Evitar una estética excesivamente gubernamental o anticuada, pero tampoco convertirla en un SaaS futurista.
+
+────────────────────────────────────────
+6. IDENTIDAD INSTITUCIONAL Y LOGOS
+────────────────────────────────────────
+
+Utiliza exclusivamente los logotipos institucionales suministrados como assets:
+
+- logo 1.png
+- logo 2.png
+
+Selecciona la versión horizontal o vertical según el espacio.
+
+Puedes:
+- redimensionar;
+- recortar únicamente espacio vacío alrededor;
+- adaptar la posición;
+- elegir una de las variantes según contraste.
+
+NO:
+- deformar;
+- recolorear;
+- reconstruir;
+- simplificar;
+- alterar el escudo;
+- eliminar elementos internos;
+- cambiar proporciones;
+- agregar efectos;
+- generar una versión alternativa mediante IA.
+
+Si los assets no están disponibles en el entorno actual, reserva correctamente el espacio para el logo y utiliza el nombre textual “Universidad Militar Nueva Granada”; NO inventes ni redibujes el escudo.
+
+────────────────────────────────────────
+7. PALETA
+────────────────────────────────────────
+
+Colores institucionales obligatorios:
+
+Primary Navy:
+#04235F
+
+Accent Yellow:
+#FEC223
+
+El azul es el color estructural principal.
+El amarillo es un ACENTO y no debe dominar grandes superficies.
+
+Usos recomendados del azul:
+- sidebar;
+- títulos importantes;
+- botones secundarios;
+- links;
+- focus;
+- elementos estructurales;
+- navegación.
+
+Usos recomendados del amarillo:
+- CTA principal;
+- “Nueva valoración”;
+- progreso;
+- selección puntual;
+- indicador activo;
+- pequeños highlights.
+
+Nunca utilizar amarillo como:
+- fondo principal del dashboard;
+- fondo de grandes cards;
+- área extensa detrás de formularios;
+- color dominante de toda la página.
+
+En botones amarillos utilizar texto azul #04235F, no blanco, para mantener contraste.
+
+Neutrales sugeridos:
+Background: #F5F6F8
+Surface: #FFFFFF
+Text primary: #172033
+Text secondary: #5F6978
+Border: #D9DEE7
+Disabled background: #EEF1F4
+
+Añadir únicamente colores semánticos necesarios y apagados:
+- success;
+- warning;
+- error;
+- info.
+
+No convertirlos en parte de la identidad de marca.
+No usar tonos altamente saturados.
+
+────────────────────────────────────────
+8. TIPOGRAFÍA
+────────────────────────────────────────
+
+Usar exclusivamente:
+
+Noto Sans, sans-serif.
+
+Misma familia en toda la aplicación.
+Variar únicamente peso, tamaño y jerarquía.
+
+Escala orientativa:
+
+H1: 28 / 36, 700
+H2: 22 / 30, 700
+H3: 18 / 26, 600
+Body: 16 / 24, 400
+Body compact: 14 / 20, 400
+Label: 14 / 20, 600
+Caption: 12 / 16, 400
+Button: 14 / 20, 600
+
+No utilizar serif.
+No introducir una segunda fuente.
+No usar títulos extremadamente grandes.
+
+────────────────────────────────────────
+9. SISTEMA DE ESPACIADO Y GEOMETRÍA
+────────────────────────────────────────
+
+Utilizar una retícula de espaciado base 8.
+
+Valores:
+4
+8
+12
+16
+24
+32
+40
+48
+64
+
+Corners:
+- inputs: 8 px;
+- botones: 8–10 px;
+- cards: 10–12 px;
+- modales: 12 px;
+- badges: redondeo tipo pill solo cuando tenga sentido.
+
+La interfaz debe ser sutilmente redondeada, NO excesivamente “bubble UI”.
+
+Sombras:
+muy suaves.
+
+Ejemplo visual:
+0 2px 8px rgba(4,35,95,0.06–0.09)
+
+Usar bordes grises suaves antes que sombras fuertes.
+
+────────────────────────────────────────
+10. GRID Y DESKTOP
+────────────────────────────────────────
+
+Diseñar principalmente para desktop.
+
+Frame base recomendado:
+1440 × 1024.
+
+Sidebar:
+aprox. 232–248 px.
+
+Top/header:
+60–68 px.
+
+Contenido principal:
+padding 32 px;
+máximo visual aproximado 1120–1180 px.
+
+Utilizar Auto Layout en todo lo razonablemente posible.
+
+No colocar objetos “a mano” si pueden resolverse mediante Auto Layout.
+
+Los formularios desktop pueden usar dos columnas cuando mejore la lectura.
+
+No superar anchos de formulario incómodos.
+
+────────────────────────────────────────
+11. RESPONSIVE
+────────────────────────────────────────
+
+No hace falta crear una página móvil ni duplicar todos los frames en móvil.
+
+Sin embargo, la aplicación debe comportarse correctamente en pantallas estrechas.
+
+Reglas:
+
+Desktop:
+sidebar fija.
+
+Pantallas menores:
+la sidebar debe convertirse en drawer mediante botón hamburguesa.
+
+NO crear sidebar tablet “solo iconos”.
+
+En móvil:
+- formulario en una sola columna;
+- cards apiladas;
+- CTA principal con ancho completo cuando ayude;
+- tablas pueden transformarse en bloques/cards compactos o usar scroll horizontal controlado;
+- modales deben respetar márgenes;
+- stepper debe mantenerse legible;
+- botones con área táctil mínima 44×44;
+- topbar compacta;
+- nunca cortar inputs ni textos.
+
+No necesitas presentar todas las pantallas móviles como frames independientes.
+
+────────────────────────────────────────
+12. SIDEBAR
+────────────────────────────────────────
+
+Usar una sidebar vertical azul #04235F.
+
+Orden exacto:
+
+Inicio
+Nueva valoración
+Valoraciones
+Exportar datos
+Configuración
+Ayuda
+
+NO incluir iconos en la sidebar.
+
+No hacerla colapsable en desktop.
+
+Estado activo:
+- contraste claro;
+- fondo azul ligeramente más claro o transparencia blanca muy discreta;
+- pequeño indicador amarillo vertical o inferior;
+- evitar grandes bloques amarillos.
+
+Texto:
+blanco o blanco con opacidad alta.
+
+Footer opcional muy discreto:
+versión del sistema o referencia institucional, solo si visualmente ayuda.
+
+────────────────────────────────────────
+13. HEADER SUPERIOR
+────────────────────────────────────────
+
+Mantenerlo simple.
+
+Debe contener:
+- contexto/título de la sección actual;
+- a la derecha, pequeña indicación visual de la cuenta activa;
+- foto de perfil pequeña o iniciales sobrias;
+- nombre corto o rol si hace falta para reconocer la cuenta.
+
+No incluir:
+- campana de notificaciones;
+- buscador global;
+- saludo personalizado;
+- mensajes como “Hola, Juan”;
+- widgets irrelevantes.
+
+Al hacer clic en el área de usuario abrir un dropdown con:
+
+Perfil
+Configuración
+Cerrar sesión
+
+Todos deben ser navegables.
+
+────────────────────────────────────────
+14. LOGIN
+────────────────────────────────────────
+
+Crear una pantalla de inicio de sesión minimalista.
+
+Composición:
+- fondo claro o blanco;
+- logo institucional;
+- nombre del sistema:
+  “Registro, validación y valoración”;
+- subtítulo institucional breve;
+- card central o composición dividida muy sutil;
+- Usuario;
+- Contraseña;
+- botón “Iniciar sesión”;
+- enlace “¿Olvidaste tu contraseña?”.
+
+No usar:
+- fotografías stock;
+- ilustraciones enormes;
+- fondos militares;
+- escudos como marca de agua gigante;
+- gradientes;
+- elementos decorativos innecesarios.
+
+El login debe sentirse oficial y sobrio.
+
+Hacer funcional:
+
+Iniciar sesión → Inicio
+
+¿Olvidaste tu contraseña? → pantalla/formulario de recuperación.
+
+Recuperación:
+- usuario o correo institucional;
+- acción para solicitar recuperación;
+- estado de confirmación sobrio;
+- regreso a iniciar sesión.
+
+No crear autenticación real.
+Simularla dentro del prototipo.
+
+────────────────────────────────────────
+15. DASHBOARD / INICIO
+────────────────────────────────────────
+
+Diseñar un inicio muy limpio y fácil de entender.
+
+No usar gráficos si no son necesarios.
+
+Debe tener como elemento visual dominante un CTA:
+
+“Nueva valoración”
+
+El botón debe ser amarillo #FEC223 con texto azul oscuro.
+
+Contenido recomendado:
+
+Cabecera:
+Inicio
+
+CTA:
+Nueva valoración
+
+Dos tarjetas de resumen compactas:
+- En proceso
+- Completadas
+
+Ejemplo de datos ficticios:
+En proceso: 7
+Completadas: 24
+
+Luego:
+“Valoraciones recientes”
+
+Mostrar una tabla/listado ligero con aproximadamente 5 registros y:
+
+Nombre
+Número
+Puntaje
+Fecha
+
+Puede mostrar estado y una acción contextual si no sobrecarga.
+
+No introducir:
+- gráficas de barras;
+- gráficas circulares;
+- porcentajes decorativos;
+- KPI empresariales;
+- actividad social;
+- noticias;
+- calendario;
+- notificaciones.
+
+────────────────────────────────────────
+16. IDENTIFICADOR DE VALORACIÓN
+────────────────────────────────────────
+
+Si la documentación especifica un formato de identificador, respetarlo exactamente.
+
+Si no existe uno explícito, usar el patrón:
+
+VAL-AAAA-####
+
+Ejemplo:
+VAL-2026-0001
+
+Debe ser:
+- sencillo;
+- legible;
+- único;
+- reutilizado en historial, revisión, exportación y pantalla final.
+
+────────────────────────────────────────
+17. FLUJO PRINCIPAL: NUEVA VALORACIÓN
+────────────────────────────────────────
+
+Al pulsar “Nueva valoración”, iniciar un wizard guiado.
+
+Debe ser imposible saltarse pasos futuros.
+
+Los pasos anteriores ya completados sí pueden volver a abrirse.
+
+No permitir click en pasos futuros.
+
+No hacer autosave.
+
+Debe existir la acción explícita:
+
+“Guardar borrador”
+
+El borrador posteriormente se puede continuar desde “Valoraciones”.
+
+Validar los datos al pulsar:
+
+“Siguiente”
+
+Los campos obligatorios tendrán un asterisco *.
+
+Los errores deben mostrarse:
+- justo debajo del campo incorrecto;
+- texto claro;
+- borde rojo en el input;
+- no mostrar “éxito” en campos correctos.
+
+Labels siempre visibles.
+No depender exclusivamente de placeholders.
+
+El stepper superior:
+- utilizar círculos numéricos;
+- NO colocar nombres largos debajo de cada círculo;
+- el nombre de la etapa aparece como título principal del formulario;
+- paso actual claramente resaltado;
+- paso completado reemplaza número por check;
+- pasos futuros deshabilitados;
+- línea de progreso muy sutil;
+- amarillo solo como acento.
+
+Como el SRS no establece literalmente un wizard visual cerrado, estructurar el flujo en CINCO ETAPAS operativas sin alterar el orden lógico de los módulos:
+
+1. Datos básicos
+2. Formación académica
+3. Experiencia calificada
+4. Productividad académica
+5. Resumen
+
+La “Categoría docente” debe aparecer como subsección claramente separada dentro de “Datos básicos”, porque es un factor de cálculo propio y no debe perderse.
+
+La validación de soportes se integra en los apartados donde existe documentación y se consolida antes del cierre.
+
+────────────────────────────────────────
+18. PASO 1 — DATOS BÁSICOS
+────────────────────────────────────────
+
+Título:
+Datos básicos
+
+Primera sección:
+Datos del docente
+
+Campos principales:
+
+Nombre docente *
+Identificación *
+Facultad *
+Dedicación *
+Fecha *
+
+Mantener estos campos como núcleo del expediente.
+
+Usar datos ficticios creíbles, por ejemplo:
+Laura Martínez Gómez
+1.023.456.789
+Facultad de Ingeniería
+Tiempo completo
+15/07/2026
+
+No usar Lorem Ipsum.
+
+Debajo, crear una subsección independiente:
+
+Categoría docente
+
+Campo:
+Categoría aplicable *
+
+Opciones correspondientes a las categorías establecidas por la normativa para el caso pertinente.
+
+Mostrar de manera discreta:
+“Puntaje asociado”
+calculado por el sistema.
+
+No convertirlo en un input editable manualmente por el evaluador.
+
+Acciones inferiores:
+Anterior — deshabilitado en el primer paso
+Guardar borrador
+Siguiente
+
+Al pulsar Siguiente:
+- validar únicamente campos incorrectos;
+- si están completos, crear/actualizar expediente y continuar.
+
+Estado operativo interno inicial:
+Registrado.
+
+Cuando avanza el diligenciamiento:
+En diligenciamiento.
+
+No es necesario mostrar esos estados internos como badges destacados en todas las páginas.
+
+────────────────────────────────────────
+19. PASO 2 — FORMACIÓN ACADÉMICA
+────────────────────────────────────────
+
+Título:
+Formación académica
+
+Debe permitir registrar:
+
+Pregrado
+Especialización
+Maestría
+Especialización clínica
+Doctorado
+
+Organizarlo mediante tabs internas o bloques expansibles, manteniendo la interfaz ligera.
+
+Para PREGRADO contemplar los datos establecidos en la documentación:
+
+Institución *
+Título / programa *
+Duración *
+Fecha de inicio *
+Fecha de grado *
+Tipo *
+Soporte documental *
+
+Para POSGRADOS:
+usar únicamente los campos exigidos según modalidad y documentación, incluyendo:
+
+- tipo;
+- duración cuando corresponda;
+- fechas;
+- dedicación cuando corresponda;
+- soporte documental;
+- información necesaria para aplicar reglas de acumulación y topes.
+
+No inventar preguntas académicas adicionales.
+
+Permitir añadir más de un registro cuando la norma lo permita.
+
+Después de registrar:
+mostrar una card compacta resumen por título con:
+- nombre;
+- institución;
+- tipo;
+- estado del soporte;
+- puntaje preliminar.
+
+Cada registro puede:
+Editar
+Eliminar
+
+Solo permitir eliminar registros que todavía sean editables/no validados conforme al flujo.
+
+Carga de soporte:
+- dropzone discreta;
+- botón para seleccionar archivo;
+- mostrar nombre del documento;
+- mostrar estado.
+
+No inventar extensiones ni tamaños máximos si la institución no los ha definido.
+En ese caso escribir únicamente:
+“Formatos autorizados por la institución”.
+
+Una carga válida queda inicialmente:
+“Pendiente de validación”.
+
+Si un soporte presenta observación:
+“Con observación”.
+
+Si ha sido revisado:
+“Revisado”.
+
+No usar estos colores como único indicador; acompañarlos con texto.
+
+Acciones:
+Anterior
+Guardar borrador
+Siguiente
+
+────────────────────────────────────────
+20. PASO 3 — EXPERIENCIA CALIFICADA
+────────────────────────────────────────
+
+Título:
+Experiencia calificada
+
+Permitir añadir múltiples registros.
+
+Campos:
+
+Entidad *
+Cargo *
+Tipo de actividad *
+Vínculo *
+Dedicación *
+Horas *
+Fecha de inicio *
+Fecha de finalización *
+Soporte documental *
+
+Los tipos necesarios para el cálculo deben corresponder a la norma y permitir distinguir:
+
+- experiencia en investigación;
+- experiencia docente universitaria;
+- experiencia profesional calificada en cargos de dirección académica;
+- experiencia profesional calificada diferente de la docente.
+
+El sistema debe:
+- calcular el periodo;
+- obtener el equivalente aplicable;
+- contemplar fracciones de año;
+- detectar fechas inconsistentes;
+- detectar periodos traslapados;
+- mostrar advertencia cuando corresponda.
+
+Si fecha final < fecha inicial:
+bloquear guardado y mostrar error inline.
+
+Si existen periodos simultáneos:
+mostrar advertencia de traslape y aplicar únicamente la regla institucional/normativa configurada.
+
+No inventar cómo resolver un traslape cuando la regla institucional específica no esté disponible.
+
+Mostrar los registros añadidos en cards o tabla compacta con:
+
+Entidad
+Actividad
+Periodo
+Equivalente
+Puntaje preliminar
+Estado del soporte
+Acciones
+
+Acciones:
+Anterior
+Guardar borrador
+Siguiente
+
+────────────────────────────────────────
+21. PASO 4 — PRODUCTIVIDAD ACADÉMICA
+────────────────────────────────────────
+
+Título:
+Productividad académica
+
+Selector inicial:
+
+Tipo de producto académico *
+
+Soportar como mínimo los tipos definidos en el SRS:
+
+Artículo
+Libro
+Video / producción cinematográfica / fonográfica
+Premio
+Patente
+Obra artística
+Producción técnica
+Software
+Otro, únicamente si la documentación lo contempla
+
+El formulario debe ser DINÁMICO: mostrar únicamente campos relevantes al tipo seleccionado.
+
+No presentar treinta campos a la vez.
+
+ARTÍCULO
+
+Campos documentados:
+
+Revista *
+Clasificación *
+ISSN *
+Fecha *
+Tipo *
+Número de autores *
+Soporte *
+
+Clasificaciones:
+A1
+A2
+B
+C
+
+Tipos necesarios para aplicar las reglas:
+- artículo tradicional;
+- comunicación corta;
+- reporte de caso;
+- revisión de tema;
+- carta al editor;
+- editorial.
+
+LIBRO
+
+Campos documentados:
+Nombre *
+ISBN *
+Tipo de libro *
+Pares, cuando aplique
+Número de autores *
+Soporte *
+
+Tipos de libro relevantes:
+- libro resultado de investigación;
+- libro de texto;
+- libro de ensayo;
+- traducción de libro cuando corresponda.
+
+VIDEO / PRODUCCIÓN CINEMATOGRÁFICA / FONOGRÁFICA
+
+Usar:
+Producto
+Institución
+Impacto o difusión necesario para la regla
+Pares cuando aplique
+Autores
+Soporte
+
+Permitir identificar cuando se trate de material documental, porque modifica el tope aplicable según el Decreto.
+
+OTROS PRODUCTOS
+
+Para premios, patentes, obras artísticas, producción técnica y software:
+no inventar cuestionarios completos.
+
+Mostrar solo:
+- identificación/nombre del producto;
+- modalidad/subtipo necesario para calcular;
+- fecha si el flujo la requiere;
+- impacto/clasificación cuando controle el puntaje;
+- autores cuando aplique;
+- soporte;
+- concepto de pares cuando sea obligatorio.
+
+Cuando un producto requiera evaluación por pares:
+mostrar estado:
+
+“Pendiente de concepto”
+
+No permitir que un producto de ese tipo sea tratado como definitivo mientras falte el concepto correspondiente.
+
+El sistema NO evalúa automáticamente calidad académica.
+
+Debe poder registrar el resultado/concepto cuando este haya sido suministrado externamente al proceso.
+
+Mostrar productos ya añadidos mediante cards o tabla compacta.
+
+Detectar posible duplicidad y mostrar advertencia si se intenta registrar el mismo producto nuevamente.
+
+Acciones:
+Anterior
+Guardar borrador
+Siguiente
+
+────────────────────────────────────────
+22. REVISIÓN DOCUMENTAL
+────────────────────────────────────────
+
+La revisión de soportes debe ser funcional sin crear un módulo visual excesivamente separado.
+
+Al abrir un soporte:
+mostrar en modal o panel:
+
+- datos asociados;
+- nombre del archivo;
+- vista/representación del documento si es posible;
+- estado;
+- observación.
+
+Permitir registrar:
+- confirmación de revisión;
+- inconsistencia;
+- observación.
+
+Toda inconsistencia debe tener comentario asociado.
+
+Si el documento no puede visualizarse:
+permitir registrar una incidencia.
+
+Mostrar de forma discreta la aclaración:
+
+“El sistema no determina la autenticidad legal del documento; solo permite registrar revisión, observaciones e inconsistencias documentales.”
+
+No crear herramientas de:
+- análisis forense;
+- detección de fraude;
+- validación biométrica;
+- OCR legal;
+- verificación automática de autenticidad.
+
+────────────────────────────────────────
+23. PASO 5 — RESUMEN
+────────────────────────────────────────
+
+Título:
+Resumen
+
+Debe ser la pantalla previa a finalizar.
+
+No saturarla.
+
+Mostrar únicamente información relevante para que el evaluador compruebe el expediente:
+
+Datos del docente:
+- nombre;
+- identificación;
+- facultad;
+- dedicación;
+- categoría.
+
+Resumen de puntaje:
+- Formación académica;
+- Categoría docente;
+- Experiencia calificada;
+- Productividad académica;
+- Puntaje total.
+
+Mostrar estado documental general.
+
+Cuando corresponda:
+- Valor del punto vigente/configurado;
+- Estimativo salarial;
+- indicación de cálculo preliminar o validado.
+
+No inventar un valor monetario “vigente” del punto si no se proporciona como parámetro actualizado.
+
+NO utilizar automáticamente el valor histórico original del Decreto como si fuera un valor monetario actual.
+
+El sistema debe tratar el valor monetario vigente como parámetro institucional.
+
+Mostrar:
+“Valor del punto vigente”
+con la variable configurada en el prototipo.
+
+Si no existe parámetro:
+mostrar:
+“No es posible completar el estimativo porque falta un parámetro vigente.”
+
+Comentario final:
+
+Comentario general
+Opcional
+
+Debe existir SOLO un comentario general al final.
+No exigir comentario por apartado.
+
+Agregar una sección de trazabilidad muy discreta y colapsada por defecto si es necesaria para demostrar el SRS.
+Debe registrar conceptualmente:
+- usuario;
+- fecha;
+- acción;
+- elemento modificado.
+
+No convertir la bitácora en protagonista de la pantalla.
+
+Acciones:
+Anterior
+Guardar borrador
+Finalizar valoración
+
+────────────────────────────────────────
+24. CONFIRMACIÓN DE FINALIZACIÓN
+────────────────────────────────────────
+
+Al pulsar “Finalizar valoración”:
+
+1. validar que todos los pasos obligatorios hayan sido completados;
+2. validar soportes conforme al flujo;
+3. validar conceptos de pares obligatorios;
+4. validar que el cálculo pueda completarse;
+5. si falta algo, NO cerrar el expediente y mostrar qué debe corregirse;
+6. si todo está correcto, abrir modal de confirmación.
+
+Modal:
+
+Título:
+Finalizar valoración
+
+Texto corto y claro que confirme la intención de cerrar la valoración.
+
+Botones:
+Cancelar
+Finalizar valoración
+
+No usar una alerta exagerada.
+
+Tras confirmar:
+- cerrar expediente;
+- bloquear edición ordinaria;
+- cambiar estado general visible a Completada;
+- conservar la versión de reglas utilizada;
+- mostrar pantalla de éxito.
+
+────────────────────────────────────────
+25. PANTALLA DE ÉXITO
+────────────────────────────────────────
+
+Diseño limpio y centrado.
+
+Mostrar:
+
+check de éxito sutil
+
+Valoración completada
+
+Número:
+VAL-2026-0001
+o el identificador correspondiente.
+
+Puntaje final:
+XXX puntos
+
+Acciones:
+
+Volver al inicio
+Ver valoraciones
+Exportar PDF
+
+No lanzar confeti.
+No usar animaciones celebratorias exageradas.
+
+────────────────────────────────────────
+26. HISTORIAL — “VALORACIONES”
+────────────────────────────────────────
+
+Crear módulo:
+
+Valoraciones
+
+Debe soportar:
+- búsqueda;
+- filtros;
+- ordenamiento;
+- paginación.
+
+Tabla principal desktop.
+
+Los datos principales solicitados deben ser:
+
+Nombre
+Número
+Puntaje
+Fecha
+
+Añadir únicamente lo funcionalmente imprescindible:
+Estado
+Acciones
+
+Estados visibles simplificados:
+
+En proceso
+Completada
+
+No crear diez badges de estados en esta tabla.
+
+Los estados operativos internos del SRS pueden mapearse así:
+
+Registrado → En proceso
+En diligenciamiento → En proceso
+Con inconsistencias → En proceso
+Calculado preliminarmente → En proceso
+Revisado → En proceso
+Observado → En proceso
+Finalizado → Completada
+
+Filtros rápidos:
+Todos
+En proceso
+Completadas
+
+Búsqueda:
+por nombre o número.
+
+Filtros adicionales, cuando haga falta:
+fecha
+facultad
+
+Ordenamiento:
+fecha
+nombre
+puntaje
+
+Paginación:
+10 registros por página es suficiente para la demostración.
+
+ACCIONES
+
+Para “En proceso”:
+Editar / Continuar
+Ver
+
+Para “Completada”:
+Ver
+Exportar
+
+NO permitir editar una valoración completada.
+
+“Ver” no debe crear una página compleja adicional.
+Usar un modal o drawer limpio con:
+
+Nombre
+Número
+Puntaje
+Fecha
+Estado
+Comentario general si existe
+
+Mantenerlo breve.
+
+“Editar / Continuar” abre el wizard en el último paso pendiente.
+
+────────────────────────────────────────
+27. EXPORTAR DATOS
+────────────────────────────────────────
+
+Página:
+Exportar datos
+
+Diseño administrativo muy limpio.
+
+Permitir filtrar por:
+
+Rango de fechas
+Facultad
+Evaluador / usuario
+Estado
+
+Estados disponibles:
+En proceso
+Completada
+
+No crear un constructor de reportes avanzado.
+
+Mostrar botón:
+Exportar datos
+
+Al pulsarlo abrir un MODAL.
+
+Modal:
+Exportar datos
+
+Elegir formato:
+
+Excel
+CSV
+PDF
+
+No permitir selección individual de 40 columnas.
+Exportar la información definida para el sistema.
+
+Botones:
+Cancelar
+Exportar
+
+Simular el proceso con un spinner breve.
+
+Al terminar:
+mostrar un único toast de confirmación de exportación, por ejemplo:
+
+“Archivo exportado correctamente.”
+
+Este es el único caso donde se requiere un toast de éxito.
+
+No crear un sistema general de notificaciones toast para cada acción.
+
+────────────────────────────────────────
+28. REPORTES DE EXPEDIENTE
+────────────────────────────────────────
+
+Cuando se exporte una valoración individual, el reporte debe poder incluir, conforme al SRS:
+
+- datos del expediente;
+- factores;
+- puntajes;
+- soportes;
+- estados;
+- observaciones;
+- trazabilidad;
+- versión de reglas/parámetros utilizada.
+
+No diseñar el reporte como una página de marketing.
+
+Mantener identidad UMNG, jerarquía documental y legibilidad para PDF.
+
+────────────────────────────────────────
+29. CONFIGURACIÓN
+────────────────────────────────────────
+
+Página:
+Configuración
+
+Usar navegación secundaria mediante tabs:
+
+Perfil
+Seguridad
+Parámetros de valoración
+
+TAB — PERFIL
+
+Mostrar datos básicos de la cuenta:
+Nombre
+Correo institucional
+Dependencia
+
+Permitir edición de datos personales únicamente si es razonable para el prototipo.
+
+Botón:
+Guardar cambios
+
+TAB — SEGURIDAD
+
+Formulario:
+Contraseña actual *
+Nueva contraseña *
+Confirmar nueva contraseña *
+
+Botón:
+Cambiar contraseña
+
+Estados inline de validación.
+
+TAB — PARÁMETROS DE VALORACIÓN
+
+IMPORTANTE:
+El usuario del prototipo es evaluador.
+
+Por tanto:
+esta pestaña es SOLO LECTURA.
+
+Mostrar una tabla limpia de parámetros vigentes relevantes con, como máximo:
+
+Apartado / parámetro
+Valor en puntos
+Vigencia
+Versión
+
+Añadir una indicación discreta:
+“Los parámetros de valoración son administrados por usuarios autorizados.”
+
+NO colocar:
+Editar
+Eliminar
+Agregar parámetro
+Crear criterio
+Modificar fórmula
+Modificar escala
+
+No crear ninguna pantalla administrativa adicional.
+
+────────────────────────────────────────
+30. AYUDA
+────────────────────────────────────────
+
+Página:
+Ayuda
+
+Únicamente dos bloques principales:
+
+Manual de uso
+Contacto con soporte
+
+Manual:
+- descripción corta;
+- acción “Ver manual” o “Abrir manual”.
+
+Soporte:
+- correo;
+- extensión/teléfono institucional ficticio si hace falta para la maqueta;
+- acción “Contactar soporte”.
+
+No añadir:
+FAQ extensa
+chatbot
+tickets complejos
+foro
+centro de aprendizaje
+videos
+noticias.
+
+────────────────────────────────────────
+31. PERFIL Y CERRAR SESIÓN
+────────────────────────────────────────
+
+Desde el dropdown superior:
+
+Perfil → Configuración > Perfil
+Configuración → Configuración
+Cerrar sesión → Login
+
+El dropdown debe cerrar:
+- al seleccionar opción;
+- al hacer clic fuera;
+- mediante Escape si la interacción lo permite.
+
+No mostrar una confirmación innecesaria al cerrar sesión.
+
+────────────────────────────────────────
+32. CÁLCULO — REGLAS DEL DECRETO 1279
+────────────────────────────────────────
+
+Implementar el motor visual/funcional del prototipo siguiendo exactamente las reglas normativas aplicables al alcance del SRS.
+
+No inventar puntajes.
+
+Para REMUNERACIÓN INICIAL, los factores son:
+
+- títulos universitarios;
+- categoría dentro del escalafón docente;
+- experiencia calificada;
+- productividad académica.
+
+Fórmula general:
+
+PUNTAJE TOTAL =
+Formación académica
++ Categoría docente
++ Experiencia calificada
++ Productividad académica
+
+REMUNERACIÓN / ESTIMATIVO =
+Puntaje total
+× valor del punto vigente
+× proporcionalidad de dedicación cuando corresponda.
+
+No inventar un factor de dedicación si no está suministrado.
+Tratarlo como parámetro institucional.
+
+────────────────────────────────────────
+33. FORMACIÓN — REGLAS DE PUNTAJE
+────────────────────────────────────────
+
+Aplicar las reglas del artículo correspondiente del Decreto.
+
+PREGRADO
+
+Título de pregrado:
+178 puntos.
+
+Pregrado en medicina humana o composición musical:
+183 puntos.
+
+Si posee varios pregrados:
+solo debe tenerse en cuenta el que guarde relación directa con la actividad académica según la norma/proceso institucional.
+
+POSGRADO
+
+Especialización de entre uno y dos años académicos:
+hasta 20 puntos.
+
+Por año adicional:
+hasta 10 puntos adicionales,
+hasta completar máximo 30 puntos.
+
+No reconocer más de dos especializaciones.
+
+Maestría:
+hasta 40 puntos.
+
+Doctorado / Ph.D.:
+hasta 80 puntos.
+
+Doctorado sin maestría acreditada:
+hasta 120 puntos, conforme a la regla del Decreto.
+
+Dos maestrías:
+pueden acumular hasta 20 puntos adicionales al valor aplicable por una maestría,
+sin superar 60 puntos por este concepto.
+
+Dos doctorados:
+aplicar el límite normativo correspondiente.
+
+Para quien no tenga maestría y acredite dos doctorados:
+máximo acumulable 140 puntos conforme al Decreto.
+
+Maestría + especializaciones:
+máximo 60 puntos conforme a la regla aplicable.
+
+Máximo acumulable general por títulos de posgrado:
+140 puntos.
+
+Especializaciones clínicas en medicina humana y odontología:
+15 puntos por cada año,
+máximo 75 puntos.
+
+Cuando la norma diga “hasta”, NO conviertas automáticamente ese máximo en asignación obligatoria si la decisión depende de valoración institucional.
+
+El UI debe distinguir:
+puntaje máximo posible
+vs.
+puntaje reconocido/aplicable,
+cuando corresponda.
+
+────────────────────────────────────────
+34. CATEGORÍA DOCENTE — REGLAS
+────────────────────────────────────────
+
+Puntajes:
+
+Instructor o Profesor Auxiliar / Instructor Asistente:
+37 puntos.
+
+Profesor Asistente:
+58 puntos.
+
+Profesor Asociado:
+74 puntos.
+
+Profesor Titular:
+96 puntos.
+
+Instructor Asociado de la Universidad Nacional, cuando aplique normativamente:
+44 puntos.
+
+Los puntajes de categoría NO son acumulativos.
+
+No sumar categorías anteriores durante un ascenso.
+
+────────────────────────────────────────
+35. EXPERIENCIA CALIFICADA — REGLAS
+────────────────────────────────────────
+
+Para ingreso/reingreso conforme al alcance correspondiente:
+
+Por cada año equivalente a tiempo completo de experiencia en investigación:
+hasta 6 puntos.
+
+Por cada año equivalente a tiempo completo de experiencia docente universitaria:
+hasta 4 puntos.
+
+Por cada año equivalente a tiempo completo de experiencia profesional calificada en cargos de dirección académica:
+hasta 4 puntos.
+
+Por cada año equivalente a tiempo completo de experiencia profesional calificada diferente de la docente:
+hasta 3 puntos.
+
+Fracciones de año:
+liquidación proporcional.
+
+La experiencia debe corresponder a la obtenida después de la obtención del título universitario cuando la norma así lo establece.
+
+Los años dedicados a estudios de posgrado no se contabilizan como experiencia, salvo las excepciones normativas para Medicina Humana y Odontología.
+
+Cuando existan distintas formas de experiencia dentro del mismo año:
+realizar liquidación proporcional según la norma.
+
+Topes para ingreso/reingreso:
+
+Instructor Asistente / Instructor Asociado / Profesor Auxiliar:
+20 puntos.
+
+Profesor Asistente:
+45 puntos.
+
+Profesor Asociado:
+90 puntos.
+
+Profesor Titular:
+120 puntos.
+
+Si el expediente corresponde a otro supuesto del Decreto con reglas distintas, usar la regla específica aplicable y no mezclar sistemas de cálculo.
+
+────────────────────────────────────────
+36. PRODUCTIVIDAD ACADÉMICA — ARTÍCULOS
+────────────────────────────────────────
+
+Artículos tradicionales:
+
+A1:
+15 puntos.
+
+A2:
+12 puntos.
+
+B:
+8 puntos.
+
+C:
+3 puntos.
+
+Comunicación corta:
+60% del puntaje correspondiente al nivel de la revista.
+
+Reporte de caso, revisión de tema, carta al editor o editorial:
+30% del puntaje correspondiente al nivel y clasificación.
+
+Aplicar las restricciones por número de autores posteriormente.
+
+────────────────────────────────────────
+37. PRODUCTIVIDAD — VIDEOS / CINE / FONOGRAFÍA
+────────────────────────────────────────
+
+Impacto/difusión internacional:
+hasta 12 puntos.
+
+Impacto/difusión nacional:
+hasta 7 puntos.
+
+Si tiene carácter documental:
+máximo 80% del puntaje señalado para la modalidad correspondiente.
+
+Máximo:
+5 productos completos reconocibles anualmente dentro de las modalidades aplicables establecidas por la norma.
+
+No asumir el puntaje máximo automáticamente cuando la redacción normativa indique “hasta”.
+
+────────────────────────────────────────
+38. PRODUCTIVIDAD — LIBROS Y OTROS
+────────────────────────────────────────
+
+Libro resultado de investigación:
+hasta 20 puntos.
+
+Libro de texto:
+hasta 15 puntos.
+
+Libro de ensayo:
+hasta 15 puntos.
+
+Premio nacional o internacional:
+hasta 15 puntos.
+
+Patente:
+hasta 25 puntos.
+
+Traducción de libro:
+hasta 15 puntos.
+
+Producción técnica:
+
+Innovación tecnológica:
+hasta 15 puntos.
+
+Adaptación tecnológica:
+hasta 8 puntos.
+
+Producción de software:
+hasta 15 puntos.
+
+No reconocer automáticamente máximos que requieran valoración cualitativa.
+
+────────────────────────────────────────
+39. PRODUCTIVIDAD — OBRAS ARTÍSTICAS
+────────────────────────────────────────
+
+Creación original:
+
+Impacto internacional:
+hasta 20 puntos.
+
+Impacto nacional:
+hasta 14 puntos.
+
+Creación complementaria o de apoyo:
+
+Impacto internacional:
+hasta 12 puntos.
+
+Impacto nacional:
+hasta 8 puntos.
+
+Interpretación:
+
+Impacto internacional:
+hasta 14 puntos.
+
+Impacto nacional:
+hasta 8 puntos.
+
+Máximo:
+5 obras diferentes dentro del año calendario conforme a la norma.
+
+No reconocer varias veces una misma presentación/interpretación cuando la norma lo prohíbe.
+
+────────────────────────────────────────
+40. PRODUCTIVIDAD — RESTRICCIÓN POR AUTORES
+────────────────────────────────────────
+
+Aplicar exactamente:
+
+Hasta 3 autores:
+cada autor recibe el puntaje total liquidado al producto.
+
+De 4 a 5 autores:
+cada autor recibe la mitad del puntaje.
+
+6 o más autores:
+el puntaje para cada autor se obtiene dividiendo el puntaje del producto por la mitad del número total de autores.
+
+Equivalente:
+puntaje individual =
+puntaje producto / (número autores / 2)
+
+Cuando en un libro las contribuciones puedan separarse por capítulos o partes, respetar el tratamiento normativo correspondiente.
+
+No asignar puntos a un mismo producto bajo más de un concepto si la norma lo prohíbe.
+
+────────────────────────────────────────
+41. PARES EXTERNOS
+────────────────────────────────────────
+
+Identificar los productos que requieren concepto externo.
+
+Cuando falte:
+Estado:
+Pendiente de concepto
+
+El sistema debe impedir tratarlos como definitivos.
+
+No simular que la plataforma reemplaza la evaluación de pares.
+
+Cuando el concepto ya exista:
+permitir registrarlo como información suministrada externamente.
+
+No generar una “puntuación de calidad por IA”.
+
+────────────────────────────────────────
+42. TOPES DE PRODUCTIVIDAD POR CATEGORÍA
+────────────────────────────────────────
+
+Aplicar cuando corresponda al caso normativo:
+
+Profesor Auxiliar:
+80 puntos.
+
+Profesor Asistente:
+160 puntos.
+
+Profesor Asociado:
+320 puntos.
+
+Profesor Titular:
+540 puntos.
+
+Instructor Asociado:
+110 puntos.
+
+Mostrar advertencia cuando un cálculo preliminar llegue o exceda el tope aplicable.
+
+No permitir que el prototipo simplemente ignore el tope.
+
+────────────────────────────────────────
+43. VERSIONADO DEL CÁLCULO
+────────────────────────────────────────
+
+Cada valoración debe conservar conceptualmente:
+
+- versión de reglas utilizada;
+- valores de puntos vigentes al momento de su creación;
+- fecha de creación;
+- resultado calculado.
+
+Si los puntos configurables cambian posteriormente:
+solo las nuevas valoraciones usan los nuevos valores.
+
+Valoraciones ya “En proceso”:
+conservan los valores con los que fueron creadas.
+
+Valoraciones “Completadas”:
+no se recalculan.
+
+────────────────────────────────────────
+44. BORRADOR Y EDICIÓN
+────────────────────────────────────────
+
+No autosave.
+
+“Guardar borrador” debe:
+- conservar datos simulados;
+- devolver feedback inline discreto o cambio de estado;
+- permitir continuar posteriormente.
+
+No es necesario mostrar toast por guardar borrador.
+
+Desde historial:
+En proceso → Editar/Continuar.
+
+Completada:
+solo Ver y Exportar.
+
+No permitir cambios posteriores al cierre dentro del flujo normal.
+
+────────────────────────────────────────
+45. BÚSQUEDA, FILTROS Y TABLAS
+────────────────────────────────────────
+
+Todas las tablas deben sentirse institucionales, no como hojas de Excel sin diseño.
+
+Header de tabla:
+gris muy claro o blanco con borde inferior.
+
+Altura de filas:
+aprox. 52–56 px.
+
+Usar alineación consistente.
+
+Número y puntaje:
+alineación numérica clara.
+
+Acciones:
+texto o botón pequeño, sin llenar cada fila de iconos.
+
+Buscar:
+input de 40–44 px.
+
+Filtros:
+selects compactos.
+
+Estado vacío:
+mensaje útil + CTA solo cuando tenga sentido.
+
+Ejemplo:
+“No se encontraron valoraciones con estos filtros.”
+
+────────────────────────────────────────
+46. COMPONENTES
+────────────────────────────────────────
+
+Crear componentes reutilizables con variantes:
+
+Button
+Input
+Password input
+Textarea
+Select
+Date input
+Search input
+File upload
+Checkbox
+Radio si fuese necesario
+Tabs
+Status badge
+Card
+Data table
+Pagination
+Modal
+Drawer
+Dropdown menu
+Stepper
+Spinner
+Inline alert
+Empty state
+Error state
+Profile control
+File row
+Support status
+Score summary
+Filter bar
+
+BUTTON VARIANTS
+
+Primary:
+amarillo #FEC223 + texto azul.
+
+Secondary:
+azul #04235F + texto blanco.
+
+Tertiary:
+texto azul / fondo transparente.
+
+Outline:
+borde azul.
+
+Danger:
+solo para acciones realmente destructivas.
+
+Estados:
+default
+hover
+pressed
+focus
+disabled
+loading
+
+────────────────────────────────────────
+47. FORMULARIOS
+────────────────────────────────────────
+
+Inputs de aproximadamente 44–48 px de alto.
+
+Label encima.
+
+Obligatorio:
+asterisco visible.
+
+Error:
+borde rojo + mensaje debajo.
+
+Focus:
+ring visible.
+
+Disabled:
+claramente distinguible.
+
+No usar únicamente placeholder como label.
+
+No llenar formularios de helper texts.
+
+Añadir ayuda solo si evita errores reales.
+
+Agrupar por secciones con espacio suficiente.
+
+No poner diez campos en una sola fila.
+
+────────────────────────────────────────
+48. ACCESIBILIDAD
+────────────────────────────────────────
+
+Cumplir WCAG 2.2 AA en el diseño del prototipo.
+
+Prioridades:
+
+- contraste de texto;
+- foco visible;
+- navegación por teclado;
+- orden lógico de tabulación;
+- labels asociados a inputs;
+- errores textuales;
+- no depender solo de color;
+- targets de interacción mínimo 44×44 cuando sea posible;
+- modales con foco coherente;
+- cerrar modal con Escape si es técnicamente posible;
+- contraste del amarillo con texto azul;
+- sidebar con contraste suficiente;
+- estados disabled inequívocos;
+- encabezados jerárquicos;
+- iconos con propósito comprensible.
+
+Si un color semántico no cumple contraste:
+ajustar su tono sin cambiar los dos colores institucionales base.
+
+────────────────────────────────────────
+49. ICONOGRAFÍA
+────────────────────────────────────────
+
+Utiliza una sola librería de iconos lineales consistente, por ejemplo Lucide.
+
+Stroke aproximado:
+1.5–2 px.
+
+NO utilizar iconos en la sidebar.
+
+Sí se permiten iconos funcionales discretos en:
+- inputs;
+- archivos;
+- estados;
+- modales;
+- acciones;
+- cards;
+- éxito;
+- error.
+
+No mezclar estilos Filled, Outline, 3D y emoji.
+
+────────────────────────────────────────
+50. MICROINTERACCIONES
+────────────────────────────────────────
+
+Animaciones:
+dinámicas pero suaves.
+
+Duración:
+150–250 ms aproximadamente.
+
+Usar Smart Animate cuando aporte claridad.
+
+Ejemplos:
+- dropdown;
+- modal;
+- cambio de tab;
+- cambio de paso;
+- drawer móvil;
+- estado hover;
+- expansión de contenido.
+
+No sobreanimar.
+
+No hacer:
+rebotes
+zoom exagerado
+parallax
+transiciones 3D
+efectos “gaming”.
+
+────────────────────────────────────────
+51. ESTADOS DEL SISTEMA
+────────────────────────────────────────
+
+Crear únicamente los estados necesarios para demostrar robustez:
+
+Loading
+Sin resultados
+Sin registros
+Error del sistema
+Sin conexión
+Éxito
+Permisos insuficientes
+
+Loading:
+usar spinner.
+
+NO skeleton loader.
+
+No crear:
+pantalla 404;
+pantalla de sesión expirada.
+
+Mantener los mensajes cortos y útiles.
+
+────────────────────────────────────────
+52. DATOS DE DEMOSTRACIÓN
+────────────────────────────────────────
+
+Todo el contenido debe estar en español.
+
+Usar datos ficticios pero realistas.
+
+Ejemplo principal:
+
+Docente:
+Laura Martínez Gómez
+
+Identificación:
+1.023.456.789
+
+Facultad:
+Facultad de Ingeniería
+
+Dedicación:
+Tiempo completo
+
+Categoría:
+Profesor Asistente
+
+Número:
+VAL-2026-0001
+
+Crear otros registros ficticios consistentes para llenar historial, por ejemplo:
+- Andrés Felipe Rojas;
+- Natalia Gómez Pérez;
+- Camilo Hernández Díaz;
+- Diana Carolina Torres.
+
+No usar nombres de personas reales identificables.
+No usar Lorem Ipsum.
+No usar “John Doe”.
+
+Los puntajes de ejemplo deben ser plausibles y consistentes con las reglas utilizadas.
+
+No presentar un número ficticio como un valor normativo oficial.
+
+────────────────────────────────────────
+53. USER FLOW
+────────────────────────────────────────
+
+En “04 — User Flow” crear un diagrama breve, limpio y legible:
+
+Login
+↓
+Inicio
+↓
+Nueva valoración
+↓
+Datos básicos
+↓
+Formación académica
+↓
+Experiencia calificada
+↓
+Productividad académica
+↓
+Resumen
+↓
+Confirmación
+↓
+Valoración completada
+↓
+Ver / Exportar
+
+Ramificaciones secundarias:
+
+Inicio → Valoraciones → Editar borrador
+Inicio → Valoraciones → Ver completada
+Inicio → Exportar datos
+Inicio → Configuración
+Inicio → Ayuda
+Perfil → Cerrar sesión → Login
+
+No construir un mapa gigante con todos los posibles estados técnicos.
+
+────────────────────────────────────────
+54. PROTOTIPO NAVEGABLE
+────────────────────────────────────────
+
+El prototipo debe poder demostrarse de principio a fin sin enlaces muertos.
+
+Conectar:
+
+Login
+Recuperar contraseña
+Inicio
+Nueva valoración
+Paso 1
+Paso 2
+Paso 3
+Paso 4
+Paso 5
+Modal de finalización
+Éxito
+Valoraciones
+Ver valoración
+Editar valoración en proceso
+Exportar
+Configuración
+Perfil
+Seguridad
+Parámetros
+Ayuda
+Dropdown de usuario
+Cerrar sesión
+
+Todos los botones principales deben reaccionar.
+
+Todos los dropdowns deben abrirse.
+
+Todos los tabs deben funcionar.
+
+Los modales deben:
+abrirse,
+cerrarse,
+cancelarse,
+confirmarse.
+
+Los filtros deben poder cambiar visualmente resultados simulados.
+
+La búsqueda debe poder mostrar un caso con resultado y un caso sin resultados.
+
+────────────────────────────────────────
+55. COMPORTAMIENTO TÉCNICO DEL PROTOTIPO
+────────────────────────────────────────
+
+Si Figma Make genera lógica de aplicación:
+
+- utilizar estado local;
+- no requerir backend;
+- no requerir API externa;
+- no realizar autenticación real;
+- no subir documentos a servidores;
+- simular persistencia durante la sesión;
+- simular exportación;
+- permitir seleccionar un archivo local y mostrar su nombre si es viable;
+- mantener navegación interna coherente;
+- calcular dinámicamente los ejemplos normativos cuando haya datos suficientes;
+- usar variables centralizadas para puntajes y parámetros.
+
+No instalar dependencias innecesarias.
+
+No complicar el código para funcionalidades que no aporten al prototipo.
+
+────────────────────────────────────────
+56. FOUNDATIONS
+────────────────────────────────────────
+
+En “01 — Foundations” representar de forma ordenada:
+
+Color
+Typography
+Spacing
+Radius
+Shadow
+Grid
+Accessibility examples
+
+Mostrar:
+Primary Navy #04235F
+Accent Yellow #FEC223
+Neutrales
+Semantic colors
+
+Crear variables/tokens cuando Figma lo permita.
+
+Naming ejemplo:
+
+color/brand/navy
+color/brand/yellow
+color/bg/default
+color/surface/default
+color/text/primary
+color/text/secondary
+color/border/default
+color/status/error
+color/status/success
+color/status/warning
+
+spacing/4
+spacing/8
+spacing/12
+spacing/16
+spacing/24
+spacing/32
+spacing/48
+
+radius/input
+radius/button
+radius/card
+radius/modal
+
+────────────────────────────────────────
+57. COMPONENTS PAGE
+────────────────────────────────────────
+
+En “02 — Components” mostrar componentes organizados, no una galería caótica.
+
+Agrupar:
+
+Actions
+Forms
+Navigation
+Feedback
+Data display
+Overlays
+
+Mostrar variantes relevantes pero no todas las combinaciones imaginables.
+
+Todos los componentes deben usar Auto Layout.
+
+Nombres profesionales, por ejemplo:
+
+Button / Primary / Default
+Button / Primary / Hover
+Input / Default
+Input / Error
+Badge / In progress
+Badge / Completed
+Modal / Confirmation
+Table / Row
+Stepper / Current
+Stepper / Completed
+
+────────────────────────────────────────
+58. DESKTOP PAGE
+────────────────────────────────────────
+
+En “03 — Desktop” organizar los frames en filas lógicas.
+
+AUTH
+Login
+Recuperar contraseña
+
+CORE
+Inicio
+Nueva valoración — Datos básicos
+Nueva valoración — Formación académica
+Nueva valoración — Experiencia calificada
+Nueva valoración — Productividad académica
+Nueva valoración — Resumen
+Finalizar — Modal
+Valoración completada
+
+MANAGEMENT
+Valoraciones
+Valoración — Ver modal/drawer
+Exportar datos
+Exportar — Modal
+
+ACCOUNT
+Configuración — Perfil
+Configuración — Seguridad
+Configuración — Parámetros
+
+SUPPORT
+Ayuda
+
+STATES
+solo frames o componentes necesarios para demostrar empty/error/loading/permission.
+
+────────────────────────────────────────
+59. NO HACER — RESTRICCIONES CRÍTICAS
+────────────────────────────────────────
+
+ESTA SECCIÓN TIENE PRIORIDAD AL GENERAR EL DISEÑO.
+
+NO modificar nombres de apartados establecidos.
+
+NO cambiar su orden.
+
+NO fusionar criterios normativos porque “se vea más simple”.
+
+NO resumir preguntas establecidas.
+
+NO inventar preguntas.
+
+NO agregar campos obligatorios que no sean necesarios.
+
+NO eliminar campos documentados.
+
+NO cambiar puntajes del Decreto.
+
+NO inventar escalas.
+
+NO reinterpretar fórmulas.
+
+NO usar valores normativos aproximados.
+
+NO inventar el valor monetario vigente del punto.
+
+NO utilizar automáticamente el valor histórico inicial del Decreto como si fuera el vigente actual.
+
+NO alterar textos legales.
+
+NO inventar requisitos institucionales no definidos.
+
+NO inventar formatos/tamaños máximos de archivo.
+
+NO afirmar que el sistema verifica autenticidad legal.
+
+NO afirmar que el sistema valida que un documento sea verdadero.
+
+NO usar IA para decidir calidad académica.
+
+NO sustituir el concepto de pares externos.
+
+NO sustituir al Comité Interno.
+
+NO presentar cálculos preliminares como acto administrativo definitivo.
+
+NO crear dashboard de administrador.
+
+NO crear flujo de administrador.
+
+NO agregar selector de rol.
+
+NO permitir que el evaluador edite parámetros.
+
+NO permitir que un admin hipotético cambie criterios, fórmulas, escalas, nombres o estructura.
+
+NO aplicar cambios de parámetros retroactivamente.
+
+NO recalcular valoraciones completadas.
+
+NO permitir editar valoraciones completadas.
+
+NO permitir saltarse pasos futuros.
+
+NO hacer autosave.
+
+NO eliminar “Guardar borrador”.
+
+NO añadir confirmación al abandonar cada formulario.
+
+NO pedir comentario obligatorio al finalizar.
+
+NO crear comentarios por apartado.
+
+NO usar más de un comentario general final.
+
+NO convertir cada pantalla en una tarjeta gigante flotante.
+
+NO saturar el dashboard.
+
+NO llenar Inicio de estadísticas.
+
+NO usar gráficas sin necesidad.
+
+NO usar ilustraciones infantiles.
+
+NO usar fotografías stock.
+
+NO usar emojis.
+
+NO usar glassmorphism.
+
+NO usar neumorphism.
+
+NO usar gradientes.
+
+NO usar brillos.
+
+NO usar efectos 3D.
+
+NO usar sombras fuertes.
+
+NO usar bordes negros.
+
+NO utilizar amarillo como fondo de grandes superficies.
+
+NO utilizar amarillo en toda la sidebar.
+
+NO usar blanco sobre amarillo si el contraste es insuficiente.
+
+NO cambiar #FEC223.
+
+NO cambiar #04235F.
+
+NO recolorear el logo.
+
+NO deformar el logo.
+
+NO recrear el escudo por IA.
+
+NO colocar iconos en la sidebar.
+
+NO hacer sidebar colapsable en desktop.
+
+NO crear una sidebar tablet únicamente con iconos.
+
+NO añadir campana de notificaciones.
+
+NO añadir centro de notificaciones.
+
+NO añadir chatbot.
+
+NO añadir onboarding.
+
+NO añadir tour guiado.
+
+NO añadir gamificación.
+
+NO añadir modo oscuro.
+
+NO añadir selector de idioma.
+
+NO añadir gráficas decorativas.
+
+NO añadir buscador global.
+
+NO usar encabezados gigantes.
+
+NO utilizar más de una familia tipográfica.
+
+NO utilizar serif.
+
+NO crear páginas Figma adicionales a las cinco indicadas.
+
+NO crear una página móvil completa separada.
+
+NO ignorar responsive.
+
+NO crear pantalla 404.
+
+NO crear pantalla de sesión expirada.
+
+NO usar skeleton loaders.
+
+NO utilizar toasts para todo.
+
+NO crear un detalle de valoración excesivamente complejo.
+
+NO convertir el historial en un CRM.
+
+NO construir un sistema de tickets en Ayuda.
+
+NO inventar integraciones.
+
+NO inventar API.
+
+NO crear nómina.
+
+NO calcular prestaciones sociales.
+
+NO incluir primas, cesantías, vacaciones o pensiones dentro del producto.
+
+NO integrar pagos.
+
+NO convertir el prototipo en un ERP universitario.
+
+NO inventar funciones fuera del SRS y de estas instrucciones.
+
+────────────────────────────────────────
+60. CRITERIO FINAL DE CALIDAD
+────────────────────────────────────────
+
+Antes de considerar terminado el diseño, revisar internamente que:
+
+- parezca una aplicación real de la Universidad Militar Nueva Granada;
+- el branding sea reconocible sin saturación;
+- el azul sea estructural;
+- el amarillo sea acento;
+- Noto Sans sea consistente;
+- la sidebar respete el orden solicitado;
+- no existan iconos en la sidebar;
+- “Nueva valoración” sea inmediatamente visible;
+- el wizard sea imposible de saltar;
+- los pasos completados muestren check;
+- los formularios tengan labels permanentes;
+- errores aparezcan inline;
+- exista Guardar borrador;
+- un borrador pueda reanudarse;
+- una valoración completada no pueda editarse;
+- historial muestre Nombre + Número + Puntaje + Fecha;
+- historial tenga búsqueda, filtros, orden y paginación;
+- exportación soporte Excel, CSV y PDF;
+- exista modal de exportación;
+- exista confirmación antes de finalizar;
+- exista pantalla final de éxito;
+- Configuración tenga Perfil, Seguridad y Parámetros de valoración;
+- Parámetros sea solo lectura para evaluador;
+- Ayuda tenga solo Manual de uso y Contacto con soporte;
+- no exista experiencia de administrador;
+- no exista automatización de autenticidad documental;
+- el cálculo respete las reglas normativas;
+- soportes pendientes se reflejen correctamente;
+- productos que requieren pares permanezcan pendientes;
+- exista trazabilidad;
+- cada expediente conserve versión de reglas;
+- el prototipo sea navegable de principio a fin;
+- no haya botones principales sin interacción;
+- no existan elementos visuales innecesarios;
+- el resultado final sea sobrio, intuitivo y suficientemente moderno sin perder carácter académico-administrativo.
+
+GENERA AHORA EL PROTOTIPO COMPLETO.
+Prioriza precisión funcional, claridad visual, fidelidad normativa y navegabilidad sobre creatividad decorativa.
