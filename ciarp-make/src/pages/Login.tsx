@@ -2,7 +2,8 @@ import { useState } from "react";
 import { CheckCircle2, ShieldCheck, Pencil } from "lucide-react";
 import { Button, Card, Field, InlineAlert, Input, PasswordInput } from "../components/ui";
 import { Logo } from "../components/Layout";
-import { USUARIOS_DEMO, type Rol, type UsuarioSistema } from "../lib/store";
+import { signIn } from "../lib/auth";
+import type { Rol, UsuarioSistema } from "../lib/store";
 
 const ROLES: { rol: Rol; label: string; descripcion: string; icon: typeof Pencil; color: string }[] = [
   {
@@ -28,21 +29,36 @@ export function Login({ onLogin }: { onLogin: (u: UsuarioSistema) => void }) {
   const [rolSeleccionado, setRolSeleccionado] = useState<Rol | "">("");
   const [errores, setErrores] = useState<{ usuario?: string; pass?: string; rol?: string }>({});
   const [correo, setCorreo] = useState("");
+  const [cargando, setCargando] = useState(false);
+  const [errorGeneral, setErrorGeneral] = useState("");
 
-  const entrar = () => {
+  const entrar = async () => {
     const e: typeof errores = {};
-    if (!usuario.trim()) e.usuario = "Ingrese su usuario.";
+    if (!usuario.trim()) e.usuario = "Ingrese su correo.";
     if (!pass.trim()) e.pass = "Ingrese su contraseña.";
     if (!rolSeleccionado) e.rol = "Seleccione un rol para continuar.";
     setErrores(e);
     if (Object.keys(e).length > 0) return;
+    if (rolSeleccionado === "") return;
 
-    // Prototipo: cualquier usuario/contraseña es válido; el rol determina el perfil
-    const plantilla = USUARIOS_DEMO.find((u) => u.rol === rolSeleccionado)!;
-    const { pass: _p, ...base } = plantilla;
-    // Usar el nombre de usuario ingresado como nombre de display
-    const iniciales = usuario.trim().slice(0, 2).toUpperCase();
-    onLogin({ ...base, usuario: usuario.trim(), nombre: usuario.trim(), iniciales });
+    setCargando(true);
+    setErrorGeneral("");
+    try {
+      const authenticatedUser = await signIn(
+        usuario.trim(),
+        pass,
+        rolSeleccionado,
+      );
+      onLogin(authenticatedUser);
+    } catch (error) {
+      setErrorGeneral(
+        error instanceof Error
+          ? error.message
+          : "No fue posible iniciar sesión.",
+      );
+    } finally {
+      setCargando(false);
+    }
   };
 
   return (
@@ -155,13 +171,13 @@ export function Login({ onLogin }: { onLogin: (u: UsuarioSistema) => void }) {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Field label="Usuario" required error={errores.usuario}>
+                <Field label="Correo" required error={errores.usuario}>
                   <Input
                     value={usuario}
                     error={!!errores.usuario}
                     onChange={(e) => { setUsuario(e.target.value); setErrores((prev) => ({ ...prev, usuario: undefined })); }}
-                    autoComplete="username"
-                    placeholder="Ingrese su usuario"
+                    autoComplete="email"
+                    placeholder="usuario@unimilitar.edu.co"
                   />
                 </Field>
                 <Field label="Contraseña" required error={errores.pass}>
@@ -175,12 +191,10 @@ export function Login({ onLogin }: { onLogin: (u: UsuarioSistema) => void }) {
                 </Field>
               </div>
 
-              <InlineAlert tone="info">
-                Prototipo de demostración. Cualquier usuario y contraseña son válidos; el rol seleccionado determina los permisos.
-              </InlineAlert>
+              {errorGeneral && <InlineAlert tone="error">{errorGeneral}</InlineAlert>}
 
-              <Button type="submit" className="w-full">
-                Iniciar sesión
+              <Button type="submit" className="w-full" disabled={cargando}>
+                {cargando ? "Verificando..." : "Iniciar sesión"}
               </Button>
               <button
                 type="button"

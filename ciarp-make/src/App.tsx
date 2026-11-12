@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppShell, type Route } from "./components/Layout";
 import { StoreProvider, nuevoExpediente, resumenPuntaje, snapshotValoracion, useStore, type Expediente, type UsuarioSistema, nowStr } from "./lib/store";
 import { Login } from "./pages/Login";
@@ -7,6 +7,7 @@ import { Wizard } from "./pages/wizard/Wizard";
 import { Exportar } from "./pages/Exportar";
 import { Configuracion } from "./pages/Configuracion";
 import { Ayuda } from "./pages/Ayuda";
+import { getSession, signOut } from "./lib/auth";
 
 const TITULOS: Record<Route, string> = {
   inicio: "Inicio",
@@ -139,6 +140,21 @@ function Aplicacion({ onLogout }: { onLogout: () => void }) {
 
 export default function App() {
   const [usuarioAuth, setUsuarioAuth] = useState<UsuarioSistema | null>(null);
+  const [cargandoSesion, setCargandoSesion] = useState(true);
+
+  useEffect(() => {
+    getSession()
+      .then(setUsuarioAuth)
+      .catch((error) => {
+        console.error("[auth] Session restore failed", error);
+        setUsuarioAuth(null);
+      })
+      .finally(() => setCargandoSesion(false));
+  }, []);
+
+  if (cargandoSesion) {
+    return <div className="min-h-screen bg-bg" aria-label="Cargando sesión" />;
+  }
 
   if (!usuarioAuth) {
     return <Login onLogin={(u) => setUsuarioAuth(u)} />;
@@ -146,7 +162,15 @@ export default function App() {
 
   return (
     <StoreProvider usuarioInicial={usuarioAuth}>
-      <Aplicacion onLogout={() => setUsuarioAuth(null)} />
+      <Aplicacion
+        onLogout={() => {
+          signOut()
+            .catch((error) => {
+              console.error("[auth] Sign-out failed", error);
+            })
+            .finally(() => setUsuarioAuth(null));
+        }}
+      />
     </StoreProvider>
   );
 }
