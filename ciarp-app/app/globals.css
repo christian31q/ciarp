@@ -1,26 +1,89 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-sans: 'Noto Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: #04235f;
+  --color-navy-600: #0a2e73;
+  --color-navy-400: #2a4a86;
+  --color-yellow: #fec223;
+  --color-yellow-600: #eab000;
+
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-text-primary: #172033;
+  --color-text-secondary: #5f6978;
+  --color-border-soft: #d9dee7;
+  --color-disabled: #eef1f4;
+
+  --color-success: #1f7a4d;
+  --color-success-bg: #e8f4ee;
+  --color-warning: #9a6b00;
+  --color-warning-bg: #fbf1d9;
+  --color-error: #b3261e;
+  --color-error-bg: #fbeae9;
+  --color-info: #1c5a8f;
+  --color-info-bg: #e7f0f8;
+
+  --radius-input: 8px;
+  --radius-button: 8px;
+  --radius-card: 12px;
+  --radius-modal: 12px;
+
+  --shadow-soft: 0 2px 8px rgba(4, 35, 95, 0.07);
+  --shadow-pop: 0 8px 24px rgba(4, 35, 95, 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg);
+  }
+  body {
+    margin: 0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes slideIn {
+  from { transform: translateX(24px); opacity: 0.4; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Hide scrollbars until scrolling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+*:hover,
+*:focus-within {
+  scrollbar-color: rgba(95, 105, 120, 0.35) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+:hover::-webkit-scrollbar-thumb,
+:focus-within::-webkit-scrollbar-thumb {
+  background: rgba(95, 105, 120, 0.35);
+  background-clip: content-box;
 }
