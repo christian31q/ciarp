@@ -1970,9 +1970,9 @@ function PasoResumen({ exp, set }: { exp: Expediente; set: SetFn }) {
 // =====================================================================
 
 export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Expediente; onSalir: () => void; onVerValoraciones?: () => void }) {
-  const { upsert, usuario } = useStore();
+  const { guardar, usuario } = useStore();
   const [exp, setExp] = useState<Expediente>(inicial);
-  const [paso, setPaso] = useState(0);
+  const [paso, setPaso] = useState(() => Math.max(...(inicial.pasosCompletados ?? [0]), 0));
 
   const [toast, setToast] = useState<string | null>(null);
   const cerrarToast = useCallback(() => setToast(null), []);
@@ -1992,6 +1992,7 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
     setExp((prev) => ({ ...prev, bitacora: [...prev.bitacora, entry] }));
   };
   const [maxPaso, setMaxPaso] = useState(() => {
+    if (inicial.pasosCompletados?.length) return Math.max(...inicial.pasosCompletados);
     if (inicial.productividad.length) return 4;
     if (inicial.experiencia.length) return 3;
     if (inicial.formacion.length) return 2;
@@ -2002,7 +2003,9 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
   const [confirm, setConfirm] = useState(false);
   const [faltantes, setFaltantes] = useState<string[]>([]);
   const [exito, setExito] = useState<null | Expediente>(null);
-  const [borrador, setBorrador] = useState(false);
+  const [estadoGuardado, setEstadoGuardado] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const [errorGuardado, setErrorGuardado] = useState<string | null>(null);
+  const [guardando, setGuardando] = useState(false);
   // Formulario diligenciado pero no añadido (Formación, Experiencia o Productividad).
   const [formPendiente, setFormPendiente] = useState(false);
   const [destinoPendiente, setDestinoPendiente] = useState<number | "salir" | null>(null);
@@ -2038,12 +2041,17 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
       );
     }
     const next = Math.min(paso + 1, 4);
+    setExp((prev) => ({
+      ...prev,
+      pasosCompletados: Array.from(new Set([...(prev.pasosCompletados ?? []), paso, next])).sort(),
+    }));
     setPaso(next);
     setMaxPaso((m) => Math.max(m, next));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const guardarBorrador = () => {
+  const guardarBorrador = async () => {
+    if (guardando) return;
     const entry: BitacoraEntry = {
       usuario: usuario.nombre,
       rol: usuario.rol,
@@ -2052,11 +2060,27 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
       elemento: `Paso ${paso + 1}`,
       detalle: `Paso actual: ${PASOS[paso]}`,
     };
-    const next = { ...exp, estado: "En proceso" as const, bitacora: [...exp.bitacora, entry] };
+    const next = {
+      ...exp,
+      estado: "En proceso" as const,
+      pasosCompletados: Array.from(new Set([...(exp.pasosCompletados ?? []), paso])).sort(),
+      bitacora: [...exp.bitacora, entry],
+    };
     setExp(next);
-    upsert(next);
-    setBorrador(true);
-    setTimeout(() => setBorrador(false), 2500);
+    setGuardando(true);
+    setEstadoGuardado("saving");
+    setErrorGuardado(null);
+    try {
+      const saved = await guardar(next);
+      setExp(saved);
+      setEstadoGuardado("saved");
+      window.setTimeout(() => setEstadoGuardado("idle"), 2500);
+    } catch (error) {
+      setEstadoGuardado("error");
+      setErrorGuardado(error instanceof Error ? error.message : "No fue posible guardar el borrador.");
+    } finally {
+      setGuardando(false);
+    }
   };
 
   const intentarFinalizar = () => {
@@ -2082,7 +2106,8 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
     setConfirm(true);
   };
 
-  const finalizar = () => {
+  const finalizar = async () => {
+    if (guardando) return;
     const r2 = resumenPuntaje(exp);
     const entry: BitacoraEntry = {
       usuario: usuario.nombre,
@@ -2097,9 +2122,21 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
       estado: "Completada",
       bitacora: [...exp.bitacora, entry],
     };
-    upsert(cerrado);
-    setConfirm(false);
-    setExito(cerrado);
+    setGuardando(true);
+    setEstadoGuardado("saving");
+    setErrorGuardado(null);
+    try {
+      const saved = await guardar(cerrado);
+      setExp(saved);
+      setConfirm(false);
+      setEstadoGuardado("saved");
+      setExito(saved);
+    } catch (error) {
+        setEstadoGuardado("error");
+        setErrorGuardado(error instanceof Error ? error.message : "No fue posible finalizar la valoración.");
+    } finally {
+      setGuardando(false);
+    }
   };
 
   if (exito) {
@@ -2120,6 +2157,10 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
                 setDestinoPendiente(i);
                 return;
               }
+              setExp((prev) => ({
+                ...prev,
+                pasosCompletados: Array.from(new Set([...(prev.pasosCompletados ?? []), i])).sort(),
+              }));
               setPaso(i);
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
@@ -2177,6 +2218,10 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
                   setDestinoPendiente(anterior);
                   return;
                 }
+                setExp((prev) => ({
+                  ...prev,
+                  pasosCompletados: Array.from(new Set([...(prev.pasosCompletados ?? []), anterior])).sort(),
+                }));
                 setPaso(anterior);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
@@ -2188,18 +2233,26 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
 
         {/* Derecha: borrador + avanzar */}
         <div className="flex items-center gap-3">
-          {borrador && (
+          {estadoGuardado === "saving" && (
+            <span className="text-[13px] font-medium text-text-secondary">Guardando…</span>
+          )}
+          {estadoGuardado === "saved" && (
             <span className="inline-flex items-center gap-1.5 text-[13px] font-medium text-success">
               <CheckCircle2 className="size-4" /> Guardado
             </span>
           )}
-          <Button variant="outline" onClick={guardarBorrador}>Guardar borrador</Button>
+          <Button variant="outline" disabled={guardando} onClick={guardarBorrador}>Guardar borrador</Button>
           {paso < 4 ? (
             <Button onClick={siguiente}>Siguiente <ChevronRight className="size-4" /></Button>
           ) : (
-            <Button onClick={intentarFinalizar}>Finalizar valoración</Button>
+            <Button disabled={guardando} onClick={intentarFinalizar}>Finalizar valoración</Button>
           )}
         </div>
+        {estadoGuardado === "error" && errorGuardado && (
+          <InlineAlert tone="error">
+            {errorGuardado} Los datos escritos siguen en el formulario; puedes reintentar el guardado.
+          </InlineAlert>
+        )}
       </div>
 
       {/* Modal de confirmación */}
@@ -2211,7 +2264,7 @@ export function Wizard({ inicial, onSalir, onVerValoraciones }: { inicial: Exped
           faltantes.length === 0 ? (
             <>
               <Button variant="tertiary" onClick={() => setConfirm(false)}>Cancelar</Button>
-              <Button onClick={finalizar}>Finalizar valoración</Button>
+              <Button disabled={guardando} onClick={finalizar}>Finalizar valoración</Button>
             </>
           ) : (
             <Button variant="secondary" onClick={() => setConfirm(false)}>Entendido</Button>

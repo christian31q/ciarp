@@ -154,14 +154,19 @@ function DetalleDrawer({
   onClose: () => void;
   onContinuar: (id: string) => void;
 }) {
-  const { usuario, upsert } = useStore();
+  const { usuario, upsert, guardar: guardarExpediente } = useStore();
   const esAdmin = usuario.rol === "Administrador";
   const r = resumenPuntaje(exp);
   const [tab, setTab] = useState<"info" | "auditoria" | "editar">("info");
 
-  const handleGuardarAdmin = (updated: Expediente) => {
-    upsert(updated);
-    setTab("auditoria");
+  const handleGuardarAdmin = async (updated: Expediente) => {
+    try {
+      const saved = await guardarExpediente(updated);
+      upsert(saved);
+      setTab("auditoria");
+    } catch (error) {
+      console.error("[expedientes] Admin update failed", error);
+    }
   };
 
   return (
@@ -466,7 +471,10 @@ export function Inicio({
                   const total = resumenPuntaje(e).total;
                   return (
                     <tr key={e.id} className="h-14 border-b border-border-soft last:border-0 hover:bg-bg/50">
-                      <td className="px-4 py-3 font-medium text-text-primary">{e.docente.nombre || "—"}</td>
+                      <td className="px-4 py-3 font-medium text-text-primary">
+                        {e.docente.nombre || "—"}
+                        {e.esDemo && <span className="ml-2 rounded-full bg-disabled px-2 py-0.5 text-[10px] font-semibold text-text-secondary">Ejemplo demo</span>}
+                      </td>
                       <td className="px-4 py-3 tabular-nums text-text-secondary">{e.id}</td>
                       <td className="px-4 py-3 text-text-secondary">{e.docente.sede || "—"}</td>
                       <td className="px-4 py-3 text-text-secondary">{e.docente.dedicacion || "—"}</td>

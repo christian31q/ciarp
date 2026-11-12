@@ -190,6 +190,9 @@ export interface Expediente {
   valorPunto: number;
   creado: string;
   bitacora: BitacoraEntry[];
+  pasosCompletados?: number[];
+  version?: number;
+  esDemo?: boolean;
 }
 
 // --------------------------- Helpers ---------------------------
@@ -1872,6 +1875,7 @@ export function nuevoExpediente(secuencia: number): Expediente {
     valorPunto: PARAMS.valorPuntoConfigurado,
     creado: new Date().toISOString().slice(0, 10),
     bitacora: [],
+    pasosCompletados: [],
   };
 }
 
@@ -1879,6 +1883,7 @@ export interface StoreCtx {
   usuario: UsuarioSistema;
   expedientes: Expediente[];
   upsert: (e: Expediente) => void;
+  guardar: (e: Expediente) => Promise<Expediente>;
   siguienteSecuencia: () => number;
 }
 

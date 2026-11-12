@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppShell, type Route } from "./components/Layout";
 import { StoreProvider, nuevoExpediente, resumenPuntaje, snapshotValoracion, useStore, type Expediente, type UsuarioSistema, nowStr } from "./lib/store";
 import { Login } from "./views/Login";
@@ -8,6 +8,7 @@ import { Exportar } from "./views/Exportar";
 import { Configuracion } from "./views/Configuracion";
 import { Ayuda } from "./views/Ayuda";
 import { getSession, signOut } from "./lib/auth";
+import { InlineAlert } from "./components/ui";
 
 const TITULOS: Record<Route, string> = {
   inicio: "Inicio",
@@ -23,11 +24,14 @@ function resumenPuntajeTxt(e: Expediente): string {
 }
 
 function Aplicacion({ onLogout }: { onLogout: () => void }) {
-  const { expedientes, siguienteSecuencia, usuario, upsert } = useStore();
+  const { expedientes, siguienteSecuencia, usuario, guardar } = useStore();
   const esDigitador = usuario.rol === "Digitador";
   const [route, setRoute] = useState<Route>("inicio");
   const [wizardExp, setWizardExp] = useState<Expediente | null>(null);
   const [configTab, setConfigTab] = useState("Perfil");
+  const [operacion, setOperacion] = useState<"devolver" | "segunda" | null>(null);
+  const [errorOperacion, setErrorOperacion] = useState<string | null>(null);
+  const operacionEnCurso = useRef(false);
 
   const navegar = (r: Route, tab?: string) => {
     if (r === "configuracion") setConfigTab(tab ?? "Perfil");
@@ -52,10 +56,13 @@ function Aplicacion({ onLogout }: { onLogout: () => void }) {
     }
   };
 
-  const devolverEdicion = (id: string) => {
-    if (!esDigitador) return;
+  const devolverEdicion = async (id: string) => {
+    if (!esDigitador || operacionEnCurso.current) return;
     const e = expedientes.find((x) => x.id === id);
     if (!e) return;
+    operacionEnCurso.current = true;
+    setOperacion("devolver");
+    setErrorOperacion(null);
     const reabierto: Expediente = {
       ...e,
       estado: "En proceso",
@@ -71,19 +78,28 @@ function Aplicacion({ onLogout }: { onLogout: () => void }) {
         },
       ],
     };
-    // Persistir de inmediato: el histórico, el número y la bitácora se conservan
-    // aunque el usuario abandone el asistente sin finalizar.
-    upsert(reabierto);
-    setWizardExp(reabierto);
-    setRoute("wizard");
+    try {
+      const saved = await guardar(reabierto);
+      setWizardExp(saved);
+      setRoute("wizard");
+    } catch (error) {
+      console.error("[expedientes] Reopen failed", error);
+      setErrorOperacion(error instanceof Error ? error.message : "No fue posible devolver la valoración a edición.");
+    } finally {
+      operacionEnCurso.current = false;
+      setOperacion(null);
+    }
   };
 
   // Segunda valoración: guarda el resultado actual en el histórico y abre una
   // nueva valoración sobre el mismo expediente sin sobrescribir el primer envío.
-  const segundaValoracion = (id: string) => {
-    if (!esDigitador) return;
+  const segundaValoracion = async (id: string) => {
+    if (!esDigitador || operacionEnCurso.current) return;
     const e = expedientes.find((x) => x.id === id);
     if (!e) return;
+    operacionEnCurso.current = true;
+    setOperacion("segunda");
+    setErrorOperacion(null);
     const numero = (e.numeroValoracion ?? 1) + 1;
     const reabierto: Expediente = {
       ...e,
@@ -102,15 +118,26 @@ function Aplicacion({ onLogout }: { onLogout: () => void }) {
         },
       ],
     };
-    // Persistir de inmediato: el histórico, el número y la bitácora se conservan
-    // aunque el usuario abandone el asistente sin finalizar.
-    upsert(reabierto);
-    setWizardExp(reabierto);
-    setRoute("wizard");
+    try {
+      const saved = await guardar(reabierto);
+      setWizardExp(saved);
+      setRoute("wizard");
+    } catch (error) {
+      console.error("[expedientes] Second valuation failed", error);
+      setErrorOperacion(error instanceof Error ? error.message : "No fue posible iniciar la segunda valoración.");
+    } finally {
+      operacionEnCurso.current = false;
+      setOperacion(null);
+    }
   };
 
   return (
     <AppShell route={route} title={TITULOS[route]} onNavigate={navegar} onLogout={onLogout}>
+      {errorOperacion && (
+        <InlineAlert tone="error">
+          {errorOperacion} No se abrió el wizard y los datos permanecen sin cambios.
+        </InlineAlert>
+      )}
       {route === "inicio" && (
         <Inicio onNueva={nuevaValoracion} onContinuar={continuar} />
       )}
@@ -129,8 +156,8 @@ function Aplicacion({ onLogout }: { onLogout: () => void }) {
         />
       )}
       {route === "exportar" && <Exportar
-          onDevolverEdicion={esDigitador ? devolverEdicion : undefined}
-          onSegundaValoracion={esDigitador ? segundaValoracion : undefined}
+          onDevolverEdicion={esDigitador && !operacion ? devolverEdicion : undefined}
+          onSegundaValoracion={esDigitador && !operacion ? segundaValoracion : undefined}
         />}
       {route === "configuracion" && <Configuracion tabInicial={configTab} />}
       {route === "ayuda" && <Ayuda />}
